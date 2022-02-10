@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  thepgdb:
+    image: postgres:14.1-alpine
+    container_name: postgres-alpine-efcore
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    volumes:
+      - 'northwinddb:/var/lib/postgresql/data'
+      - ./data.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
+volumes:
+  northwinddb:
